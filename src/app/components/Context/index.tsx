@@ -79,20 +79,20 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
 
         <div className="flex p-2"></div>
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
-          {/* SPLITTING METHOD STUFF */}
-          <DropdownLabel htmlFor="splittingMethod">
-            Splitting Method:
-          </DropdownLabel>
+          <div className="text-white font-bold">Chose your personality</div>
           <div className="relative w-full">
-            <select
-              id="splittingMethod"
-              value={splittingMethod}
-              className=""
-              onChange={(e) => setSplittingMethod(e.target.value)}
-            >
-              <option value="recursive"></option>
-              <option value="markdown"></option>
-            </select>
+
+
+          <label>
+            <input type="radio" name="chatbot" value="Vanilla" id="vanilla" /> Vanilla
+          </label>
+          <label>
+            <input type="radio" name="chatbot" value="Gordon Ramsay" id="gr" /> Gordon Ramsay
+          </label>
+          <label>
+            <input type="radio" name="chatbot" value="Mary Berry" id="mb" /> Mary Berry
+          </label>
+
           </div>
           {splittingMethod === "recursive" && (
             <div className="">

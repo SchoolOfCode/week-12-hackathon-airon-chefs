@@ -19,11 +19,18 @@ const Chat: React.FC<Chat> = ({
   messages,
 }) => {
   return (
-    <div
-      id="chat"
-      className="flex flex-col w-full lg:w-4/5 mr-4 mx-5 lg:mx-0 relative"
-    >
-      <div className="absolute top-8 left-1/2 transform -translate-x-1/2"></div>
+
+    <div id="chat" className="flex flex-col w-full lg:w-4/5 mr-4 mx-5 lg:mx-0 relative">
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
+        <Image
+          src="/sosig.jpg"
+          alt="Chef Gordon"
+          width={64}
+          height={64}
+          className="rounded-full border-2 border-gray-700 outline outline-2 outline-gray-500"
+        />
+      </div>
+
       <Messages messages={messages} />
       <form
         onSubmit={handleMessageSubmit}

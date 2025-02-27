@@ -76,6 +76,7 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
             Clear Index
           </Button>
         </div>
+
         <div className="flex p-2"></div>
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
           {/* SPLITTING METHOD STUFF */}
@@ -86,21 +87,21 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
             <select
               id="splittingMethod"
               value={splittingMethod}
-              className="p-2 bg-gray-700 rounded text-white w-full appearance-none hover:cursor-pointer"
+              className=""
               onChange={(e) => setSplittingMethod(e.target.value)}
             >
-              <option value="recursive">Recursive Text Splitting</option>
-              <option value="markdown">Markdown Splitting</option>
-            </select>
+              <option value="recursive"></option>
+              <option value="markdown"></option>
+            </select> */} 
           </div>
           {splittingMethod === "recursive" && (
-            <div className="my-4 flex flex-col">
-              <div className="flex flex-col w-full">
+            <div className="">
+              <div className="">
                 <DropdownLabel htmlFor="chunkSize">
-                  Chunk Size: {chunkSize}
+                   {chunkSize}
                 </DropdownLabel>
                 <input
-                  className="p-2 bg-gray-700"
+                  className=""
                   type="range"
                   id="chunkSize"
                   min={1}
@@ -108,12 +109,12 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
                   onChange={(e) => setChunkSize(parseInt(e.target.value))}
                 />
               </div>
-              <div className="flex flex-col w-full">
+              <div className="">
                 <DropdownLabel htmlFor="overlap">
                   Overlap: {overlap}
                 </DropdownLabel>
                 <input
-                  className="p-2 bg-gray-700"
+                  className=""
                   type="range"
                   id="overlap"
                   min={1}

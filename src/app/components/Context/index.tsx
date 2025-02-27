@@ -14,8 +14,11 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
   const [entries, setEntries] = useState(urls);
   const [cards, setCards] = useState<ICard[]>([]);
 
+  // manages the selected splitting method. Do we want to keep this?
   const [splittingMethod, setSplittingMethod] = useState("markdown");
+  // More splitting stuff
   const [chunkSize, setChunkSize] = useState(256);
+  // More splitting stuff
   const [overlap, setOverlap] = useState(1);
 
   // Scroll to selected card
@@ -24,6 +27,7 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
     element?.scrollIntoView({ behavior: "smooth" });
   }, [selected]);
 
+  // Dropdown for the splitting method?
   const DropdownLabel: React.FC<
     React.PropsWithChildren<{ htmlFor: string }>
   > = ({ htmlFor, children }) => (
@@ -32,6 +36,8 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
     </label>
   );
 
+  // maps through the array of urls and creates a button for each
+  // each button calls crawlDocument from utils.ts, WHAT DOES THIS DO?
   const buttons = entries.map((entry, key) => (
     <div className="" key={`${key}-${entry.loading}`}>
       <UrlButton
@@ -72,6 +78,7 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
         </div>
         <div className="flex p-2"></div>
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
+          {/* SPLITTING METHOD STUFF */}
           <DropdownLabel htmlFor="splittingMethod">
             Splitting Method:
           </DropdownLabel>

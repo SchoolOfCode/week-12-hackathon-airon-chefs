@@ -5,14 +5,25 @@ import { Card, ICard } from "./Card";
 import { clearIndex, crawlDocument } from "./utils";
 
 import { Button } from "./Button";
+import { personalities } from "@/utils/personalities";
 interface ContextProps {
   className: string;
   selected: string[] | null;
 }
 
-export const Context: React.FC<ContextProps> = ({ className, selected }) => {
+export const Context: React.FC<ContextProps> = ({
+  className,
+  selected,
+  /*   personality,
+  setPersonality, */
+}) => {
   const [entries, setEntries] = useState(urls);
   const [cards, setCards] = useState<ICard[]>([]);
+
+  // function for updating personality type
+  const updatePersonality = (e: ChangeEvent<HTMLInputElement>) => {
+    /*    setPersonality(e.target.value); */
+  };
 
   // manages the selected splitting method. Do we want to keep this?
   const [splittingMethod, setSplittingMethod] = useState("markdown");
@@ -79,49 +90,21 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
 
         <div className="flex p-2"></div>
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
-          <div className="text-white font-bold">Chose your personality</div>
-          <div className="relative w-full">
-
-
-          <label>
-            <input type="radio" name="chatbot" value="Vanilla" id="vanilla" /> Vanilla
-          </label>
-          <label>
-            <input type="radio" name="chatbot" value="Gordon Ramsay" id="gr" /> Gordon Ramsay
-          </label>
-          <label>
-            <input type="radio" name="chatbot" value="Mary Berry" id="mb" /> Mary Berry
-          </label>
-
+          <div className="text-white font-bold">Choose your personality</div>
+          <div className="flex flex-col">
+            {Object.keys(personalities).map((p) => (
+              <label key={p} className="flex items-center">
+                <input
+                  type="radio"
+                  name="personality"
+                  value={p}
+                  /*      checked={personality === p}
+                  onChange={updatePersonality} */
+                />
+                <span className="ml-2">{p}</span>
+              </label>
+            ))}
           </div>
-          {splittingMethod === "recursive" && (
-            <div className="">
-              <div className="">
-                <DropdownLabel htmlFor="chunkSize">{chunkSize}</DropdownLabel>
-                <input
-                  className=""
-                  type="range"
-                  id="chunkSize"
-                  min={1}
-                  max={2048}
-                  onChange={(e) => setChunkSize(parseInt(e.target.value))}
-                />
-              </div>
-              <div className="">
-                <DropdownLabel htmlFor="overlap">
-                  Overlap: {overlap}
-                </DropdownLabel>
-                <input
-                  className=""
-                  type="range"
-                  id="overlap"
-                  min={1}
-                  max={200}
-                  onChange={(e) => setOverlap(parseInt(e.target.value))}
-                />
-              </div>
-            </div>
-          )}
         </div>
       </div>
       <div className="flex flex-wrap w-full">

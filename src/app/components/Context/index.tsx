@@ -3,14 +3,14 @@ import { urls } from "./urls";
 import UrlButton from "./UrlButton";
 import { Card, ICard } from "./Card";
 import { clearIndex, crawlDocument } from "./utils";
-
 import { Button } from "./Button";
+
 interface ContextProps {
   className: string;
   selected: string[] | null;
 }
 
-export const Context: React.FC<ContextProps> = ({ className, selected }) => {
+const Context: React.FC<ContextProps> = ({ className, selected }) => {
   const [entries, setEntries] = useState(urls);
   const [cards, setCards] = useState<ICard[]>([]);
 
@@ -20,8 +20,12 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
 
   // Scroll to selected card
   useEffect(() => {
-    const element = selected && document.getElementById(selected[0]);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (selected && selected.length > 0) {
+      const element = document.getElementById(selected[0]);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   }, [selected]);
 
   const DropdownLabel: React.FC<
@@ -127,3 +131,5 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
     </div>
   );
 };
+
+export default Context;

@@ -7,8 +7,6 @@ import { Context } from "@/components/Context";
 import Header from "@/components/Header";
 import Chat from "@/components/Chat";
 import { useChat } from "ai/react";
-import InstructionModal from "./components/InstructionModal";
-import { AiFillGithub, AiOutlineInfoCircle } from "react-icons/ai";
 
 const Page: React.FC = () => {
   const [gotMessages, setGotMessages] = useState(false);
@@ -51,11 +49,6 @@ const Page: React.FC = () => {
   return (
     <div className="flex flex-col justify-between h-screen bg-gray-800 p-2 mx-auto max-w-full">
       <Header className="my-5" />
-      <InstructionModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-      />
-      
       <div className="flex w-full flex-grow overflow-hidden relative">
         <div className="absolute transform -translate-x-full transition-transform duration-500 ease-in-out left-0 w-2/3 h-full bg-gray-700 overflow-y-auto lg:static lg:translate-x-0 lg:w-1/5 lg:mx-2 rounded-lg">
           <Context className="" selected={context} />

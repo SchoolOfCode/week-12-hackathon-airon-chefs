@@ -1,5 +1,6 @@
-import type { Index, PineconeRecord } from '@pinecone-database/pinecone';
+import type { Index, PineconeRecord } from "@pinecone-database/pinecone";
 
+// Used to insert a large number of vectors into a Pinecone index in chunks
 const sliceIntoChunks = <T>(arr: T[], chunkSize: number) => {
   return Array.from({ length: Math.ceil(arr.length / chunkSize) }, (_, i) =>
     arr.slice(i * chunkSize, (i + 1) * chunkSize)
@@ -22,7 +23,7 @@ export const chunkedUpsert = async (
         try {
           await index.namespace(namespace).upsert(vectors);
         } catch (e) {
-          console.log('Error upserting chunk', e);
+          console.log("Error upserting chunk", e);
         }
       })
     );

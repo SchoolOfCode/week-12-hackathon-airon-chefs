@@ -11,7 +11,6 @@ import { useChat } from "ai/react";
 const Page: React.FC = () => {
   const [gotMessages, setGotMessages] = useState(false);
   const [context, setContext] = useState<string[] | null>(null);
-  const [isModalOpen, setModalOpen] = useState(false);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onFinish: async () => {
@@ -70,7 +69,6 @@ const Page: React.FC = () => {
           handleMessageSubmit={handleMessageSubmit}
           messages={messages}
         />
- 
       </div>
     </div>
   );

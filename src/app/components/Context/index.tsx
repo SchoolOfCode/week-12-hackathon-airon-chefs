@@ -92,14 +92,12 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
             >
               <option value="recursive"></option>
               <option value="markdown"></option>
-            </select> */} 
+            </select>
           </div>
           {splittingMethod === "recursive" && (
             <div className="">
               <div className="">
-                <DropdownLabel htmlFor="chunkSize">
-                   {chunkSize}
-                </DropdownLabel>
+                <DropdownLabel htmlFor="chunkSize">{chunkSize}</DropdownLabel>
                 <input
                   className=""
                   type="range"

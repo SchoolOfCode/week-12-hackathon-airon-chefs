@@ -81,6 +81,8 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
           <div className="text-white font-bold">Chose your personality</div>
           <div className="relative w-full">
+
+
           <label>
             <input type="radio" name="chatbot" value="Vanilla" id="vanilla" /> Vanilla
           </label>
@@ -90,13 +92,12 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
           <label>
             <input type="radio" name="chatbot" value="Mary Berry" id="mb" /> Mary Berry
           </label>
+
           </div>
           {splittingMethod === "recursive" && (
             <div className="">
               <div className="">
-                <DropdownLabel htmlFor="chunkSize">
-                   {chunkSize}
-                </DropdownLabel>
+                <DropdownLabel htmlFor="chunkSize">{chunkSize}</DropdownLabel>
                 <input
                   className=""
                   type="range"

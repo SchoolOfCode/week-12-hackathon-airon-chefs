@@ -2,6 +2,53 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+:root {
+  --foreground-rgb: 34, 34, 34; /* Dark brown for text */
+  --background-start-rgb: 255, 248, 220; /* Light beige for background start */
+  --background-end-rgb: 255, 235, 205; /* Light peach for background end */
+  --accent-color: 210, 105, 30; /* Chocolate for accents */
+  --secondary-color: 244, 164, 96; /* Sandy brown for secondary elements */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255; /* White for text */
+    --background-start-rgb: 34, 34, 34; /* Dark brown for background start */
+    --background-end-rgb: 51, 51, 51; /* Darker brown for background end */
+    --accent-color: 210, 105, 30; /* Chocolate for accents */
+    --secondary-color: 244, 164, 96; /* Sandy brown for secondary elements */
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+a {
+  color: rgb(var(--accent-color));
+}
+
+button {
+  background-color: rgb(var(--accent-color));
+  color: rgb(var(--foreground-rgb));
+}
+
+.header {
+  background-color: rgb(var(--secondary-color));
+  color: rgb(var(--foreground-rgb));
+}
+
+.footer {
+  background-color: rgb(var(--secondary-color));
+  color: rgb(var(--foreground-rgb));
+}
+
 @keyframes slideInFromBottom {
   0% {
     transform: translateY(100%);
@@ -18,19 +65,21 @@
 }
 
 .input-glow {
-  box-shadow: 0 0 3px #4a5568, 0 0 5px #4a5568;
+  box-shadow: 0 0 3px rgb(var(--accent-color)), 0 0 5px rgb(var(--accent-color));
 }
 
 .input-glow:hover {
-  box-shadow: 0 0 5px #87f4f6, 0 0 10px #8b9ebe;
+  box-shadow: 0 0 5px rgb(var(--secondary-color)),
+    0 0 10px rgb(var(--secondary-color));
 }
 
 .message-glow {
-  box-shadow: 0 0 3px #4a5568, 0 0 5px #4a5568;
+  box-shadow: 0 0 3px rgb(var(--accent-color)), 0 0 5px rgb(var(--accent-color));
 }
 
 .message-glow:hover {
-  box-shadow: 0 0 3px #5eabac, 0 0 4px #8b9ebe;
+  box-shadow: 0 0 3px rgb(var(--secondary-color)),
+    0 0 4px rgb(var(--secondary-color));
 }
 
 @keyframes glimmer {

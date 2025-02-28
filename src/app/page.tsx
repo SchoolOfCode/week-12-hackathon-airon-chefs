@@ -14,7 +14,6 @@ const Page: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [personality, setPersonality] = useState<"ramsay" | "berry">("ramsay"); // Default personality
 
-
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onFinish: async () => {
       setGotMessages(true);
@@ -52,7 +51,6 @@ const Page: React.FC = () => {
     <div className="flex flex-col justify-between h-screen bg-gray-800 p-2 mx-auto max-w-full">
       <Header className="my-5" />
 
-
       {/* Personality Selection */}
       <div className="flex justify-center gap-4 my-4">
         <button
@@ -75,15 +73,7 @@ const Page: React.FC = () => {
 
       {/* Chat Interface */}
       <div className="flex w-full flex-grow overflow-hidden relative">
-        <Chat
-          input={input}
-          handleInputChange={handleInputChange}
-          handleMessageSubmit={handleMessageSubmit}
-          messages={messages}
-          personality={personality} // Pass personality to Chat component
-        />
         <div className="absolute transform translate-x-full transition-transform duration-500 ease-in-out right-0 w-2/3 h-full bg-gray-700 overflow-y-auto lg:static lg:translate-x-0 lg:w-2/5 lg:mx-2 rounded-lg">
-
           <Context className="" selected={context} />
         </div>
         <button
@@ -109,4 +99,3 @@ const Page: React.FC = () => {
 };
 
 export default Page;
-

@@ -87,25 +87,6 @@ export const Context: React.FC<ContextProps> = ({
             Clear Index
           </Button>
         </div>
-
-        <div className="flex p-2"></div>
-        <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
-          <div className="text-white font-bold">Choose your personality</div>
-          <div className="flex flex-col">
-            {Object.keys(personalities).map((p) => (
-              <label key={p} className="flex items-center">
-                <input
-                  type="radio"
-                  name="personality"
-                  value={p}
-                  /*      checked={personality === p}
-                  onChange={updatePersonality} */
-                />
-                <span className="ml-2">{p}</span>
-              </label>
-            ))}
-          </div>
-        </div>
       </div>
       <div className="flex flex-wrap w-full">
         {cards &&

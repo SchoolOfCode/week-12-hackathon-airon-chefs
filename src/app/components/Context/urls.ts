@@ -12,14 +12,8 @@ export const urls = [
     loading: false,
   },
   {
-    url: "https://andrewzimmern.com/recipes/kurdish-dumplings-in-yogurt/",
-    title: "Kurdish Dumplings in Yogurt",
-    seeded: false,
-    loading: false,
-  },
-  {
-    url: "http://localhost:3001/films",
-    title: "test",
+    url: "http://localhost:3001/foods",
+    title: "Custom API",
     seeded: false,
     loading: false,
   },

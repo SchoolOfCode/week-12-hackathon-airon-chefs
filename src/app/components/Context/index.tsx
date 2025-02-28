@@ -5,17 +5,31 @@ import { Card, ICard } from "./Card";
 import { clearIndex, crawlDocument } from "./utils";
 
 import { Button } from "./Button";
+import { personalities } from "@/utils/personalities";
 interface ContextProps {
   className: string;
   selected: string[] | null;
 }
 
-export const Context: React.FC<ContextProps> = ({ className, selected }) => {
+export const Context: React.FC<ContextProps> = ({
+  className,
+  selected,
+  /*   personality,
+  setPersonality, */
+}) => {
   const [entries, setEntries] = useState(urls);
   const [cards, setCards] = useState<ICard[]>([]);
 
+  // function for updating personality type
+  const updatePersonality = (e: ChangeEvent<HTMLInputElement>) => {
+    /*    setPersonality(e.target.value); */
+  };
+
+  // manages the selected splitting method. Do we want to keep this?
   const [splittingMethod, setSplittingMethod] = useState("markdown");
+  // More splitting stuff
   const [chunkSize, setChunkSize] = useState(256);
+  // More splitting stuff
   const [overlap, setOverlap] = useState(1);
 
   // Scroll to selected card
@@ -24,6 +38,7 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
     element?.scrollIntoView({ behavior: "smooth" });
   }, [selected]);
 
+  // Dropdown for the splitting method?
   const DropdownLabel: React.FC<
     React.PropsWithChildren<{ htmlFor: string }>
   > = ({ htmlFor, children }) => (
@@ -32,6 +47,8 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
     </label>
   );
 
+  // maps through the array of urls and creates a button for each
+  // each button calls crawlDocument from utils.ts, WHAT DOES THIS DO?
   const buttons = entries.map((entry, key) => (
     <div className="" key={`${key}-${entry.loading}`}>
       <UrlButton
@@ -70,52 +87,24 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
             Clear Index
           </Button>
         </div>
+
         <div className="flex p-2"></div>
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
-          <DropdownLabel htmlFor="splittingMethod">
-            Splitting Method:
-          </DropdownLabel>
-          <div className="relative w-full">
-            <select
-              id="splittingMethod"
-              value={splittingMethod}
-              className="p-2 bg-gray-700 rounded text-white w-full appearance-none hover:cursor-pointer"
-              onChange={(e) => setSplittingMethod(e.target.value)}
-            >
-              <option value="recursive">Recursive Text Splitting</option>
-              <option value="markdown">Markdown Splitting</option>
-            </select>
+          <div className="text-white font-bold">Choose your personality</div>
+          <div className="flex flex-col">
+            {Object.keys(personalities).map((p) => (
+              <label key={p} className="flex items-center">
+                <input
+                  type="radio"
+                  name="personality"
+                  value={p}
+                  /*      checked={personality === p}
+                  onChange={updatePersonality} */
+                />
+                <span className="ml-2">{p}</span>
+              </label>
+            ))}
           </div>
-          {splittingMethod === "recursive" && (
-            <div className="my-4 flex flex-col">
-              <div className="flex flex-col w-full">
-                <DropdownLabel htmlFor="chunkSize">
-                  Chunk Size: {chunkSize}
-                </DropdownLabel>
-                <input
-                  className="p-2 bg-gray-700"
-                  type="range"
-                  id="chunkSize"
-                  min={1}
-                  max={2048}
-                  onChange={(e) => setChunkSize(parseInt(e.target.value))}
-                />
-              </div>
-              <div className="flex flex-col w-full">
-                <DropdownLabel htmlFor="overlap">
-                  Overlap: {overlap}
-                </DropdownLabel>
-                <input
-                  className="p-2 bg-gray-700"
-                  type="range"
-                  id="overlap"
-                  min={1}
-                  max={200}
-                  onChange={(e) => setOverlap(parseInt(e.target.value))}
-                />
-              </div>
-            </div>
-          )}
         </div>
       </div>
       <div className="flex flex-wrap w-full">

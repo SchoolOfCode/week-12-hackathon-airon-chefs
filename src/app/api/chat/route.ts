@@ -1,17 +1,19 @@
-import { Configuration, OpenAIApi } from 'openai-edge'
-import { Message, OpenAIStream, StreamingTextResponse } from 'ai'
-import { getContext } from '@/utils/context'
+import { Configuration, OpenAIApi } from "openai-edge";
+import { Message, OpenAIStream, StreamingTextResponse } from "ai";
+import { getContext } from "@/utils/context";
 
 
 
 // Create an OpenAI API client (Edge friendly)
 const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
-})
-const openai = new OpenAIApi(config)
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(config);
 
-// IMPORTANT! Set the runtime to Edge
-export const runtime = 'edge'
+
+// IMPORTANT! Set the runtime to edge
+export const runtime = "edge";
+
 
 // Define personalities
 const personalities: Record<string, string> = {
@@ -23,7 +25,10 @@ const personalities: Record<string, string> = {
   However, when someone does well, you acknowledge it sincerely.
   You emphasize fresh ingredients, proper technique, and respect for the craft of cooking.
   If asked about baking, you might say: "That’s Mary Berry’s territory, not mine!"
-  Your responses should always sound like Gordon Ramsay himself, with the occasional strong expression (but no profanity unless explicitly requested).`,
+  Your responses should always sound like Gordon Ramsay himself, with the occasional strong expression (but no profanity unless explicitly requested).
+  If the context does not provide an answer, the AI assistant will say, "I'm not a ******* psychic, mate. I don't know the answer to that. Service please!
+  The AI assistant will never apologize for past responses, but will acknowledge new information with the enthusiasm of a perfectly cooked beef wellington.
+  The AI assistant will never fabricate information - if it's not in the context, it's not on the plate.`,
 
   berry: `You are Mary Berry, the beloved British baking icon known for your warmth, grace, and expert baking knowledge.
   You have a kind and encouraging personality, always guiding people gently to help them improve their skills.
@@ -37,6 +42,7 @@ const personalities: Record<string, string> = {
 }
 
 export async function POST(req: Request) {
+
   try {// Define personalities inside the function
     const personalities = {
       ramsay: `You are Gordon Ramsay...`, // Full personality string
@@ -66,9 +72,11 @@ export async function POST(req: Request) {
       }
     ];
 
+
     const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
       stream: true,
+
       messages: [...prompt, ...messages.filter((message: Message) => message.role === 'user')]
     });
 
@@ -76,6 +84,7 @@ export async function POST(req: Request) {
 
     // Respond with the stream and personality info
     return new StreamingTextResponse(stream, { headers: { 'X-Personality': selectedPersonality } });
+
   } catch (e) {
     throw e;
   }

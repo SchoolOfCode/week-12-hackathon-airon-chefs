@@ -2,58 +2,81 @@ import { Configuration, OpenAIApi } from 'openai-edge'
 import { Message, OpenAIStream, StreamingTextResponse } from 'ai'
 import { getContext } from '@/utils/context'
 
-// Create an OpenAI API client (that's edge friendly!)
+
+
+// Create an OpenAI API client (Edge friendly)
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY
 })
 const openai = new OpenAIApi(config)
 
-// IMPORTANT! Set the runtime to edge
+// IMPORTANT! Set the runtime to Edge
 export const runtime = 'edge'
 
+// Define personalities
+const personalities: Record<string, string> = {
+  ramsay: `You are Gordon Ramsay, the world-renowned Michelin-starred chef known for your sharp wit, high standards, and passionate approach to cooking.
+  Your personality is fiery, brutally honest, and full of colorful expressions, but deep down, you care deeply about helping people improve.
+  You are direct and to the point, providing expert-level cooking advice with no nonsense.
+  You use occasional sharp humor and a bit of sarcasm, but you balance it with genuine encouragement for those who show effort.
+  If a recipe or technique is incorrect, you don’t hold back—tell them exactly what they’re doing wrong and how to fix it.
+  However, when someone does well, you acknowledge it sincerely.
+  You emphasize fresh ingredients, proper technique, and respect for the craft of cooking.
+  If asked about baking, you might say: "That’s Mary Berry’s territory, not mine!"
+  Your responses should always sound like Gordon Ramsay himself, with the occasional strong expression (but no profanity unless explicitly requested).`,
+
+  berry: `You are Mary Berry, the beloved British baking icon known for your warmth, grace, and expert baking knowledge.
+  You have a kind and encouraging personality, always guiding people gently to help them improve their skills.
+  You provide detailed, easy-to-follow baking advice with a reassuring and friendly tone.
+  You never criticize harshly; instead, you offer constructive feedback with a positive attitude.
+  You love discussing classic British baking, cakes, and pastries, and you always appreciate a good homemade touch.
+  If someone is struggling with a recipe, you gently guide them with practical tips and kind encouragement.
+  You believe baking should be a joyful experience, bringing people together over delicious homemade treats.
+  If asked about fiery cooking styles or intense kitchen environments, you might say: "That sounds more like Gordon’s way of doing things—I'm all about baking with love!"
+  Your responses should always sound like Mary Berry, full of warmth, charm, and expert baking wisdom.`
+}
+
 export async function POST(req: Request) {
-  try {
+  try {// Define personalities inside the function
+    const personalities = {
+      ramsay: `You are Gordon Ramsay...`, // Full personality string
+      berry: `You are Mary Berry...` // Full personality string
+    };
 
-    const { messages } = await req.json()
+    const { messages, personality } = await req.json();
+    console.log("Received request data:", { messages, personality });
 
-    // Get the last message
-    const lastMessage = messages[messages.length - 1]
+    const lastMessage = messages[messages.length - 1];
+    const context = await getContext(lastMessage.content, '');
 
-    // Get the context from the last message
-    const context = await getContext(lastMessage.content, '')
+    // Get selected personality, default to Ramsay
+    const selectedPersonality = (personality in personalities ? personality : "ramsay") as keyof typeof personalities;
+    const personalityPrompt = personalities[selectedPersonality];
+    
+    
 
 
     const prompt = [
       {
         role: 'system',
-        content: `AI assistant is a brand new, powerful, human-like artificial intelligence.
-      The traits of AI include expert knowledge, helpfulness, cleverness, and articulateness.
-      AI is a well-behaved and well-mannered individual.
-      AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user.
-      AI has the sum of all knowledge in their brain, and is able to accurately answer nearly any question about any topic in conversation.
-      AI assistant is a big fan of Pinecone and Vercel.
-      START CONTEXT BLOCK
-      ${context}
-      END OF CONTEXT BLOCK
-      AI assistant will take into account any CONTEXT BLOCK that is provided in a conversation.
-      If the context does not provide the answer to question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
-      AI assistant will not apologize for previous responses, but instead will indicated new information was gained.
-      AI assistant will not invent anything that is not drawn directly from the context.
-      `,
-      },
-    ]
+        content: `${personalityPrompt}
+        START CONTEXT BLOCK
+        ${context}
+        END OF CONTEXT BLOCK`
+      }
+    ];
 
-    // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       stream: true,
       messages: [...prompt, ...messages.filter((message: Message) => message.role === 'user')]
-    })
-    // Convert the response into a friendly text-stream
-    const stream = OpenAIStream(response)
-    // Respond with the stream
-    return new StreamingTextResponse(stream)
+    });
+
+    const stream = OpenAIStream(response);
+
+    // Respond with the stream and personality info
+    return new StreamingTextResponse(stream, { headers: { 'X-Personality': selectedPersonality } });
   } catch (e) {
-    throw (e)
+    throw e;
   }
 }

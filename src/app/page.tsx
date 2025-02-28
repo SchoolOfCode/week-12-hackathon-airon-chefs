@@ -46,15 +46,15 @@ const Page: React.FC = () => {
   }, [messages, gotMessages]);
 
   return (
-    <div className="flex flex-col justify-between h-screen bg-gray-800 p-2 mx-auto max-w-full">
+    <div className="flex flex-col justify-between h-screen bg-[#1B1B1B] p-2 mx-auto max-w-full">
       <Header className="my-5" />
       <div className="flex w-full flex-grow overflow-hidden relative">
-        <div className="absolute transform -translate-x-full transition-transform duration-500 ease-in-out left-0 w-2/3 h-full bg-gray-700 overflow-y-auto lg:static lg:translate-x-0 lg:w-1/5 lg:mx-2 rounded-lg">
+        <div className="absolute transform -translate-x-full transition-transform duration-500 ease-in-out left-0 w-2/3 h-full bg-[#b4bdc7] overflow-y-auto lg:static lg:translate-x-0 lg:w-1/5 lg:mx-2 rounded-lg">
           <Context className="" selected={context} />
         </div>
         <button
           type="button"
-          className="absolute right-20 transform translate-x-12 bg-gray-800 text-white rounded-r py-2 px-4 lg:hidden"
+          className="absolute right-20 transform translate-x-12 bg-[gray-800] text-white rounded-r py-2 px-4 lg:hidden"
           onClick={(e) => {
             e.currentTarget.parentElement
               ?.querySelector(".transform")

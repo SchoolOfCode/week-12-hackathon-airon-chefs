@@ -18,8 +18,8 @@ export const Card: FC<ICardProps> = ({ card, selected }) => (
     id={card.metadata.hash}
     className={`card w-full p-5 m-2 text-white ${
       selected && selected.includes(card.metadata.hash)
-        ? "bg-gray-600"
-        : "bg-gray-800"
+        ? "bg-[#d2d7dd]"
+        : "bg-[#d2d7dd]"
     } ${
       selected && selected.includes(card.metadata.hash)
         ? "border-double border-4 border-sky-500"

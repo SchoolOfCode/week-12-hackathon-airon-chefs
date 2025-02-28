@@ -19,8 +19,10 @@ const Chat: React.FC<Chat> = ({
   messages,
 }) => {
   return (
-
-    <div id="chat" className="flex flex-col w-full lg:w-4/5 mr-4 mx-5 lg:mx-0 relative">
+    <div
+      id="chat"
+      className="flex flex-col w-full lg:w-4/5 mr-4 mx-5 lg:mx-0 relative"
+    >
       <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
         <Image
           src="/sosig.jpg"
@@ -34,7 +36,7 @@ const Chat: React.FC<Chat> = ({
       <Messages messages={messages} />
       <form
         onSubmit={handleMessageSubmit}
-        className="mt-5 mb-5 relative bg-gray-700 rounded-lg p-4"
+        className="mt-5 mb-5 relative bg-[#5C5C5C] rounded-lg p-4"
       >
         <input
           type="text"

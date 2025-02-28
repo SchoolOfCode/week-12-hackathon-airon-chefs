@@ -46,7 +46,6 @@ export async function POST(req: Request) {
     };
 
     const { messages, personality } = await req.json();
-    console.log("Received request data:", { messages, personality });
 
     const lastMessage = messages[messages.length - 1];
     const context = await getContext(lastMessage.content, "");

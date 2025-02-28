@@ -73,11 +73,7 @@ const Page: React.FC = () => {
 
       {/* Chat Interface */}
       <div className="flex w-full flex-grow overflow-hidden relative">
-<<<<<<< HEAD
         <div className="absolute transform -translate-x-full transition-transform duration-500 ease-in-out left-0 w-2/3 h-full bg-[#b4bdc7] overflow-y-auto lg:static lg:translate-x-0 lg:w-1/5 lg:mx-2 rounded-lg">
-=======
-        <div className="absolute transform translate-x-full transition-transform duration-500 ease-in-out right-0 w-2/3 h-full bg-gray-700 overflow-y-auto lg:static lg:translate-x-0 lg:w-2/5 lg:mx-2 rounded-lg">
->>>>>>> main
           <Context className="" selected={context} />
         </div>
         <button

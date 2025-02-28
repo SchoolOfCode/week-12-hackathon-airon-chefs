@@ -7,7 +7,7 @@ export default function Header({ className }: { className?: string }) {
     <header
       className={`flex items-center justify-center text-gray-400 text-2xl ${className}`}
     >
-      AI-ron Chef Bot
+      Sous-Chef AI
     </header>
   );
 }
